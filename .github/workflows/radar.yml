@@ -1,0 +1,88 @@
+# Stock Radar on GitHub: runs every weekday after the US market close. Your PC can stay off.
+# Data lives on the "data" branch (radar.db). The report is published to GitHub Pages.
+name: StockRadar
+
+on:
+  schedule:
+    - cron: "35 21 * * 1-5"   # 21:35 UTC = 2:35 PM Pacific (1:35 PM in winter), after the 1 PM close
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: radar
+  cancel-in-progress: false
+
+jobs:
+  radar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    env:
+      TZ: America/Los_Angeles
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restore saved data from the data branch
+        run: |
+          mkdir -p state data reports
+          if git ls-remote --exit-code --heads origin data >/dev/null 2>&1; then
+            git fetch --depth=1 origin data
+            git archive FETCH_HEAD | tar -x -C state
+            test -f state/radar.db || { echo "data branch has no radar.db — stopping so nothing is overwritten"; exit 1; }
+            cp state/radar.db data/radar.db
+          fi
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install
+        run: pip install -r requirements.txt
+
+      - name: Run the radar
+        id: run
+        continue-on-error: true
+        run: python radar.py --once
+
+      - name: Save data to the data branch
+        run: |
+          test -f data/radar.db || { echo "no database produced"; exit 1; }
+          rm -rf site && mkdir -p site
+          cp reports/latest.html site/index.html 2>/dev/null || echo "<h1>Stock Radar: first run failed — see logs</h1>" > site/index.html
+          cp data/radar.db site/
+          cp data/status.json site/ 2>/dev/null || true
+          [ -d logs ] && cp -r logs site/logs
+          touch site/.nojekyll
+          cd site
+          git init -q -b data
+          git add -A
+          git -c user.name="radar-bot" -c user.email="radar-bot@users.noreply.github.com" commit -q -m "radar $(date '+%Y-%m-%d %H:%M %Z')"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" data
+
+      - name: Keep the schedule alive
+        run: |
+          last=$(git log -1 --format=%ct)
+          if [ $(( $(date +%s) - last )) -gt $(( 45 * 86400 )) ]; then
+            date > .keepalive && git add .keepalive
+            git -c user.name="radar-bot" -c user.email="radar-bot@users.noreply.github.com" commit -q -m "keepalive" && git push -q
+          fi
+
+      - uses: actions/configure-pages@v5
+        continue-on-error: true
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deploy
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+
+      - name: Fail the run if the radar failed (so you get an email)
+        if: steps.run.outcome == 'failure'
+        run: exit 1
