@@ -147,23 +147,23 @@ def run_portfolio(con, day, px, rad, cfg, bench):
 
 
 def monthly_leaps(con, prov, day, leap_list, cfg):
-    """On the first run of each month, open virtual LEAP positions in the two best ideas with the monthly budget."""
-    if sdb.meta_get(con, "leap_month") == day[:7] or not leap_list:
+    """Once a month, put the monthly budget into the two best LEAP ideas (half each).
+    Virtual money, so fractional contracts are allowed: a $40,000 contract still gets exactly its $1,000 share,
+    which keeps the % result honest no matter how expensive the stock is."""
+    if con.execute("SELECT 1 FROM ideas WHERE kind='leap' AND substr(date,1,7)=? LIMIT 1", (day[:7],)).fetchone() or not leap_list:
         return 0
     budget = cfg.get("leap_monthly_budget", 2000) / 2
     held = {r[0] for r in con.execute("SELECT ticker FROM ideas WHERE kind='leap' AND status='open'")}
     n = 0
-    for L in leap_list:
-        if L["delta"] < 0.6 or L["ticker"] in held:
+    for L in sorted(leap_list, key=lambda x: -x["score"]):
+        if L["delta"] < 0.6 or L["ticker"] in held or L["mid"] <= 0:
             continue
-        qty = int(budget // (L["mid"] * 100))
-        if qty < 1:
-            continue
+        qty = round(budget / (L["mid"] * 100), 4)
         if add_idea(con, day, "leap", L["ticker"], L, f"Radar {L['score']:.0f} điểm, delta {L['delta']}", qty):
             n += 1
+            held.add(L["ticker"])
         if n == 2:
             break
-    sdb.meta_set(con, "leap_month", day[:7])
     return n
 
 

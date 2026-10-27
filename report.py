@@ -99,7 +99,7 @@ def build(con, cfg, rad, px, plays, leap_list, day):
         b = ""
         for d, t, side, k, ex, en, now, st, why, q, rs in rows:
             ch = (now / en - 1) if en else 0
-            b += (f"<tr><td>{d}</td><td><b>{e(t)}</b> {'C' if side == 'call' else 'P'} {k:g}</td><td>{ex}</td><td>{q}</td>"
+            b += (f"<tr><td>{d}</td><td><b>{e(t)}</b> {'C' if side == 'call' else 'P'} {k:g}</td><td>{ex}</td><td>{q:g}</td>"
                   f"<td>${en:.2f}</td><td>${now:.2f}</td><td>{pct(ch, 0)}</td><td>{money((now - en) * 100 * q)}</td>"
                   f"<td class='muted'>{'đang mở' if st == 'open' else e(why or '')}</td></tr>")
         return ("<div class='scroll'><table><tr><th>Ngày vào</th><th>Hợp đồng</th><th>Hết hạn</th><th>SL</th><th>Vào</th>"

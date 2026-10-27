@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS picks (date TEXT, ticker TEXT, rank INTEGER, score RE
 CREATE TABLE IF NOT EXISTS ideas (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, kind TEXT, ticker TEXT,
   contract TEXT, side TEXT, expiry TEXT, strike REAL, entry REAL, delta REAL, iv REAL, underlying REAL,
   reason TEXT, status TEXT DEFAULT 'open', exit_date TEXT, exit_price REAL, exit_reason TEXT, last REAL,
-  last_date TEXT, peak REAL, qty INTEGER DEFAULT 1, UNIQUE(date, kind, contract));
+  last_date TEXT, peak REAL, qty REAL DEFAULT 1, UNIQUE(date, kind, contract));
 CREATE TABLE IF NOT EXISTS marks (idea_id INTEGER, date TEXT, price REAL, underlying REAL, PRIMARY KEY(idea_id, date));
 CREATE TABLE IF NOT EXISTS portfolio (name TEXT, date TEXT, value REAL, bench REAL, holdings TEXT, PRIMARY KEY(name, date));
 CREATE TABLE IF NOT EXISTS meta (k TEXT PRIMARY KEY, v TEXT);
