@@ -1,0 +1,54 @@
+{
+  "universe": [
+    "sp500",
+    "nasdaq100"
+  ],
+  "watchlist": [
+    "AAPL",
+    "MSFT",
+    "NVDA",
+    "AMZN",
+    "GOOGL",
+    "META",
+    "TSLA",
+    "AMD",
+    "AVGO",
+    "PLTR"
+  ],
+  "benchmark": "SPY",
+  "history_period": "3y",
+  "fundamentals_per_run": 120,
+  "fundamentals_max_age_days": 7,
+  "weights": {
+    "momentum": 0.25,
+    "trend": 0.15,
+    "quality": 0.2,
+    "growth": 0.2,
+    "value": 0.1,
+    "risk": 0.1
+  },
+  "radar_show": 40,
+  "leap_top": 20,
+  "leap_min_days": 365,
+  "leap_target_deltas": [
+    0.75,
+    0.5
+  ],
+  "leap_min_open_interest": 20,
+  "leap_max_spread_pct": 15,
+  "risk_free_rate": 0.04,
+  "portfolio_start": 10000,
+  "portfolio_top_n": 10,
+  "leap_monthly_budget": 2000,
+  "leap_exit_days_before_expiry": 90,
+  "leap_max_hold_days": 365,
+  "daily_plays": 5,
+  "daily_min_days": 21,
+  "daily_max_days": 50,
+  "daily_target_delta": 0.45,
+  "daily_min_open_interest": 100,
+  "daily_max_spread_pct": 10,
+  "daily_take_profit": 0.5,
+  "daily_stop_loss": 0.5,
+  "daily_max_hold_days": 14
+}
