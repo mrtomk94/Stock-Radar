@@ -159,7 +159,7 @@ def build(con, cfg, rad, px, plays, leap_list, day):
     stat = "".join(x for x in (stat_cards("daily", "Option play hằng ngày (1 HĐ mỗi lệnh)"),
                                stat_cards("leap", f"Ví LEAP (${cfg.get('leap_monthly_budget', 2000):,}/tháng)")) if x)
     page = f"""<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Stock Radar</title>
+<title>K-Solution Stock Radar</title>
 <style>
 :root{{--bg:#07090b;--panel:#0d1116;--line:#1b2127;--fg:#d7dee4;--muted:#7d8a95;--green:#3ddc97;--amber:#f5a524;--red:#ff6b5b}}
 *{{box-sizing:border-box}}body{{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 ui-monospace,Consolas,monospace}}
@@ -178,7 +178,7 @@ td.bars{{text-align:left}}td.bars i{{display:inline-block;width:9px;margin-right
 .chart{{width:100%;height:auto;background:var(--panel);border:1px solid var(--line);border-radius:6px}}.chart .ax{{fill:var(--muted);font-size:11px}}
 .legend{{display:flex;gap:14px;margin-top:6px;font-size:12px}}.legend i{{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px}}
 </style></head><body><main>
-<h1>STOCK RADAR</h1>
+<h1><svg width="30" height="30" style="vertical-align:middle;margin-right:10px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="K-Solution Stock">  <defs>    <linearGradient id="ksbgS" x1="0" y1="0" x2="1" y2="1">      <stop offset="0" stop-color="#13233d"/>      <stop offset="1" stop-color="#0b1526"/>    </linearGradient>  </defs>  <rect width="64" height="64" rx="14" fill="url(#ksbgS)"/>    <rect x="44" y="40" width="5" height="12" rx="1" fill="#1f6feb" opacity=".55"/>  <rect x="51" y="34" width="5" height="18" rx="1" fill="#1f6feb" opacity=".8"/>    <rect x="13" y="12" width="9" height="40" rx="2" fill="#ffffff"/>    <path d="M22 33 L38 52 H27.5 L19 41.5 Z" fill="#ffffff"/>    <path d="M19 35 L36.5 17.5" stroke="#3fcf98" stroke-width="8" stroke-linecap="round"/>  <path d="M30 12 H45 V27 Z" fill="#3fcf98"/></svg>K-SOLUTION · STOCK RADAR <a href="https://mrtomk94.github.io/Day-Radar/" target="_blank" rel="noopener" style="font-size:12px;letter-spacing:.04em;color:var(--amber);text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:2px 8px;margin-left:8px;vertical-align:middle">Day Radar ↗</a></h1>
 <div class="muted">Dữ liệu tới phiên {day} · cập nhật {sdb.now_str()} · {len(rad):,} mã được chấm điểm</div>
 <p class="warn">Công cụ nghiên cứu cá nhân, không phải lời khuyên đầu tư. Option có thể mất 100% tiền bỏ vào. Mọi đề xuất bên dưới được
 <b>khóa giá lúc đưa ra</b> và theo dõi bằng giá thật về sau — xem bảng chấm điểm trước khi tin bất kỳ tín hiệu nào.</p>
