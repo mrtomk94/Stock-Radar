@@ -1,0 +1,5 @@
+2026-10-30 15:12:43,621 INFO downloading 505 tickers
+2026-10-30 15:13:15,647 INFO fundamentals: 0 refreshed, 499 on file, 0 still missing
+2026-10-30 15:13:18,307 INFO daily plays: 7 setups, 1 with a liquid contract
+2026-10-30 15:13:24,086 INFO day 2026-10-30: 499 ranked, 1 plays, 57 LEAP ideas, 0 LEAPs opened, 2 ideas closed, portfolio 9795 vs SPY 9819
+2026-10-30 15:13:28,169 INFO Quyền chọn bất thường: 362 giao dịch từ 29 mã (0 lỗi)
