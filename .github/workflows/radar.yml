@@ -6,6 +6,9 @@ on:
   schedule:
     - cron: "35 21 * * 1-5"   # 21:35 UTC = 2:35 PM Pacific (1:35 PM in winter), after the 1 PM close
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['**.py', 'config.json', 'requirements.txt']   # sửa code/cấu hình thì chạy lại ngay
 
 permissions:
   contents: write
