@@ -1,0 +1,19 @@
+2026-11-06 17:09:53,905 INFO downloading 505 tickers
+2026-11-06 17:11:15,079 INFO fundamentals: 120 refreshed, 500 on file, 0 still missing
+2026-11-06 17:11:19,474 INFO daily plays: 7 setups, 1 with a liquid contract
+2026-11-06 17:11:32,446 INFO day 2026-11-06: 499 ranked, 1 plays, 54 LEAP ideas, 0 LEAPs opened, 0 ideas closed, portfolio 0 vs SPY nan
+2026-11-06 17:11:32,452 ERROR run failed:
+Traceback (most recent call last):
+  File "/home/runner/work/Stock-Radar/Stock-Radar/radar.py", line 162, in <module>
+    sys.exit(run_once())
+             ^^^^^^^^^^
+  File "/home/runner/work/Stock-Radar/Stock-Radar/radar.py", line 150, in run_once
+    report.build(con, cfg, rad, px, plays, lp, day)
+  File "/home/runner/work/Stock-Radar/Stock-Radar/report.py", line 171, in build
+    port_html = line_chart([(d, v, b) for d, v, b in pr], ("Radar Top 10", bench)) if pr else ""
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/Stock-Radar/Stock-Radar/report.py", line 82, in line_chart
+    lo, hi = min(vals), max(vals)
+             ^^^^^^^^^
+TypeError: '<' not supported between instances of 'NoneType' and 'float'
+
