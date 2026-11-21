@@ -1,0 +1,23 @@
+2026-11-20 18:47:12,691 INFO downloading 505 tickers
+2026-11-20 18:48:06,152 INFO fundamentals: 120 refreshed, 500 on file, 0 still missing
+2026-11-20 18:48:08,933 INFO daily plays: 7 setups, 0 with a liquid contract
+2026-11-20 18:48:10,911 WARNING LEAP SNDK failed: cannot convert float NaN to integer
+2026-11-20 18:48:10,961 WARNING LEAP SNDK failed: cannot convert float NaN to integer
+2026-11-20 18:48:13,351 WARNING LEAP XOM failed: cannot convert float NaN to integer
+2026-11-20 18:48:13,391 WARNING LEAP XOM failed: cannot convert float NaN to integer
+2026-11-20 18:48:15,560 INFO day 2026-11-20: 499 ranked, 0 plays, 47 LEAP ideas, 0 LEAPs opened, 0 ideas closed, portfolio 8079 vs SPY 8963
+2026-11-20 18:48:15,565 ERROR run failed:
+Traceback (most recent call last):
+  File "/home/runner/work/Stock-Radar/Stock-Radar/radar.py", line 162, in <module>
+    sys.exit(run_once())
+             ^^^^^^^^^^
+  File "/home/runner/work/Stock-Radar/Stock-Radar/radar.py", line 150, in run_once
+    report.build(con, cfg, rad, px, plays, lp, day)
+  File "/home/runner/work/Stock-Radar/Stock-Radar/report.py", line 171, in build
+    port_html = line_chart([(d, v, b) for d, v, b in pr], ("Radar Top 10", bench)) if pr else ""
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/Stock-Radar/Stock-Radar/report.py", line 82, in line_chart
+    lo, hi = min(vals), max(vals)
+             ^^^^^^^^^
+TypeError: '<' not supported between instances of 'NoneType' and 'float'
+
